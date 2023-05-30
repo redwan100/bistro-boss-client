@@ -1,9 +1,13 @@
 import React from "react";
 import {
+    FaBook,
   FaCalendarAlt,
   FaHamburger,
   FaHome,
   FaShoppingCart,
+  FaUsers,
+  FaUtensilSpoon,
+  FaUtensils,
   FaWallet,
 } from "react-icons/fa";
 import { Link, NavLink, Outlet } from "react-router-dom";
@@ -14,6 +18,8 @@ const Dashboard = () => {
   useDynamicTitle("Dashboard");
   const [cart] = useCart()
 
+//   TODO: load data from the server to dynamic isAdmin based
+  const isAdmin = true;
 
   return (
     <div className="drawer drawer-mobile">
@@ -30,40 +36,85 @@ const Dashboard = () => {
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 bg-yellow-500/20 backdrop-blur-lg text-base-content">
-          <li>
-            <Link to={"/dashboard/userhome"}>
-              <FaHome />
-              User Home
-            </Link>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/myCart"}
-              className={({ isActive }) => (isActive ? "text-white" : "")}
-            >
-              <FaShoppingCart />
-              Shopping Cart
+          {isAdmin ? (
+            <>
+              <li>
+                <Link to={"/dashboard/userhome"}>
+                  <FaHome />
+                  Admin Home
+                </Link>
+              </li>
+              <li>
+                <NavLink
+                  to={"/dashboard/myCart"}
+                  className={({ isActive }) => (isActive ? "text-white" : "")}
+                >
+                  <FaUtensils />
+                  
+                  Add Items
+                  
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/dashboard/myCart"}
+                  className={({ isActive }) => (isActive ? "text-white" : "")}
+                >
+                  <FaBook />
+                  
+                  Manage Items
+                  
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/dashboard/allusers"}
+                  >
+                  <FaUsers />
+                  
+                  All Users
+                  
+                </NavLink>
+              </li>
             
-                <div className="badge badge-secondary">+{cart.length}</div>
-           
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/reservation"}
-              className={({ isActive }) => (isActive ? "text-white" : "")}
-            >
-              <FaCalendarAlt /> Reservation
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/dashboard/history"}>
-              <FaWallet /> Payment History
-            </NavLink>
-          </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to={"/dashboard/userhome"}>
+                  <FaHome />
+                  User Home
+                </Link>
+              </li>
+              <li>
+                <NavLink
+                  to={"/dashboard/myCart"}
+                  className={({ isActive }) => (isActive ? "text-white" : "")}
+                >
+                  <FaShoppingCart />
+                  Shopping Cart
+                  <div className="badge badge-secondary">+{cart.length}</div>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/dashboard/reservation"}
+                  className={({ isActive }) => (isActive ? "text-white" : "")}
+                >
+                  <FaCalendarAlt /> Reservation
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/history"}>
+                  <FaWallet /> Payment History
+                </NavLink>
+              </li>
+            </>
+          )}
+
           <div className="divider"></div>
           <li>
-            <Link to={'/'}>
+            <Link to={"/"}>
               <FaHome /> Home
             </Link>
           </li>
