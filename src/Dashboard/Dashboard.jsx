@@ -13,13 +13,15 @@ import {
 import { Link, NavLink, Outlet } from "react-router-dom";
 import useDynamicTitle from "../Hooks/useDynamicTitle";
 import useCart from "../Hooks/useCart";
+import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
   useDynamicTitle("Dashboard");
   const [cart] = useCart()
 
-//   TODO: load data from the server to dynamic isAdmin based
-  const isAdmin = true;
+
+  // const isAdmin = true;
+  const [isAdmin]= useAdmin()
 
   return (
     <div className="drawer drawer-mobile">

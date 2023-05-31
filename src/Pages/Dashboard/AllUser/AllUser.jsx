@@ -4,16 +4,35 @@ import useDynamicTitle from "../../../Hooks/useDynamicTitle";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { FaUserShield } from "react-icons/fa";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const AllUser = () => {
   useDynamicTitle("All Users");
+  const axios = useAxiosSecure();
+
   const { data: users = [], refetch } = useQuery(["users"], async () => {
-    const res = await fetch("http://localhost:5000/users");
-    return res.json();
+    const res = await axios.get("/users");
+    return res.data;
   });
 
-  const handleMakeAdmin = (_id) => {
-    console.log({ _id });
+  const handleMakeAdmin = (user) => {
+   fetch(`http://localhost:5000/users/admin/${user._id}`,{
+    method:"PATCH"
+   })
+   .then(res =>res.json())
+   .then(data =>{
+      if(data.modifiedCount > 0){
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: `${user.name} is an admin now!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        refetch()
+      }
+   })
   };
 
   const handleDelete = (id) => {};
@@ -43,8 +62,8 @@ const AllUser = () => {
                     <td>{user.email}</td>
                     <td>
                       <button
-                        onClick={() => handleMakeAdmin(user._id)}
-                        className="w-6 h-6 bg-orange-500 text-white  grid place-content-center rounded-md hover:bg-rose-600"
+                        onClick={() => handleMakeAdmin(user)}
+                        className={`w-6 h-6 bg-orange-500 text-white  grid place-content-center rounded-md hover:bg-rose-600 ${user.role === 'admin' && 'w-max py-1 px-2'}`}
                       >
                         {user.role === "admin" ? (
                           "admin"
