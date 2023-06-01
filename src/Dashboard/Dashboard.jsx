@@ -48,7 +48,7 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink
-                  to={"/dashboard/myCart"}
+                  to={"/dashboard/additem"}
                   className={({ isActive }) => (isActive ? "text-white" : "")}
                 >
                   <FaUtensils />
@@ -59,12 +59,23 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink
+                  to={"/dashboard/manageitems"}
+                  className={({ isActive }) => (isActive ? "text-white" : "")}
+                >
+                  <FaUtensils />
+                  
+                 Manage items
+                  
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
                   to={"/dashboard/myCart"}
                   className={({ isActive }) => (isActive ? "text-white" : "")}
                 >
                   <FaBook />
                   
-                  Manage Items
+                 Cart
                   
                 </NavLink>
               </li>
