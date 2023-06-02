@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 const img_hosting_token = import.meta.env.VITE_UPLOAD_TOKEN;
 const AddItem = () => {
     const formData = new FormData()
-    const axios = useAxiosSecure()
+    const [axiosSecure] = useAxiosSecure();
 
     const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
     const {
@@ -38,20 +38,19 @@ const AddItem = () => {
                  image: imgUrl,
                };
 
-               axios.post('/menu', newMenuItem)
-               .then((data) => {
-                if (data.data.insertedId) {
-                  reset();
-                  console.log(data);
-                  Swal.fire({
-                    position: "top-center",
-                    icon: "success",
-                    title: "Successfully added your product item",
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                }
-               })
+               axiosSecure.post("/menu", newMenuItem).then((data) => {
+                 if (data.data.insertedId) {
+                   reset();
+                   console.log(data);
+                   Swal.fire({
+                     position: "top-center",
+                     icon: "success",
+                     title: "Successfully added your product item",
+                     showConfirmButton: false,
+                     timer: 1500,
+                   });
+                 }
+               });
             }
         })
     }

@@ -32,7 +32,6 @@ const ContextProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    setLoading(true);
     return signOut(auth);
   };
 
@@ -58,19 +57,21 @@ const ContextProvider = ({ children }) => {
           email: loggedUser.email,
         })
         .then(data=>{
-          localStorage.setItem('access-token', data.data.token)
-          setLoading(false);
+          if(data.data){
+            localStorage.setItem("access-token", data.data.token);
+          }
         })
       }else{
         localStorage.removeItem('access-token')
       }
 
+  setLoading(false);
      
 
     });
 
     return () => {
-      unsubscribe();
+     return unsubscribe();
     };
   }, []);
 

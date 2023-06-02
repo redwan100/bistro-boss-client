@@ -7,27 +7,34 @@ const useCart = () => {
 const {user, loading} = useContext(AuthContext);
 
 // const token = localStorage.getItem('access-token');
-const axios = useAxiosSecure()
+const [axiosSecure] = useAxiosSecure();
 
 
- const {refetch, isLoading,data:cart = []} = useQuery({
+ const {
+   refetch,
+   isLoading,
+   data: cart = [],
+ } = useQuery({
    queryKey: ["cart", user?.email],
-  //  queryFn: async () =>{
-  //   const res = await fetch(`http://localhost:5000/carts?email=${user?.email}`, {
-  //     headers:{
-  //       authorization:`bearer ${token}`
-  //     }
-  //   });
+   enabled: !!user?.email && !!localStorage.getItem('access-token'),
+   //  queryFn: async () =>{
+   //   const res = await fetch(`http://localhost:5000/carts?email=${user?.email}`, {
+   //     headers:{
+   //       authorization:`bearer ${token}`
+   //     }
+   //   });
 
+   // enabled:!!user?.email &&!! localStorage.getItem('access-token'),
 
-  // enabled:!!user?.email &&!! localStorage.getItem('access-token'),
+   //  enabled: !loading,
+   queryFn: async () => {
+     if (!loading && user?.email) {
+       const res = await axiosSecure(`/carts?email=${user?.email}`);
 
-  enabled: !loading,
-   queryFn: async () =>{
-    const res = await axios(`/carts?email=${user?.email}`);
-    console.log(res);
-    return res.data;
-   }
+       return res.data;
+     }
+   },
+
  });
 
  return [cart, refetch,isLoading]

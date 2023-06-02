@@ -6,7 +6,6 @@ import {
   FaHome,
   FaShoppingCart,
   FaUsers,
-  FaUtensilSpoon,
   FaUtensils,
   FaWallet,
 } from "react-icons/fa";
@@ -17,6 +16,7 @@ import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
   useDynamicTitle("Dashboard");
+
   const [cart] = useCart()
 
 
@@ -75,7 +75,7 @@ const Dashboard = () => {
                 >
                   <FaBook />
                   
-                 Cart
+                 Manage Booking
                   
                 </NavLink>
               </li>

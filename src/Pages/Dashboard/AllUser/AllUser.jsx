@@ -9,10 +9,10 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const AllUser = () => {
   useDynamicTitle("All Users");
-  const axios = useAxiosSecure();
+  const [axiosSecure] = useAxiosSecure();
 
   const { data: users = [], refetch } = useQuery(["users"], async () => {
-    const res = await axios.get("/users");
+    const res = await axiosSecure.get("/users");
     return res.data;
   });
 
