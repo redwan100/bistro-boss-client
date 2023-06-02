@@ -39,9 +39,9 @@ const MyCart = () => {
             </tr>
           </thead>
           <tbody>
-            {cart.map((item, index) => (
+            {cart.length ?cart.map((item, index) => (
               <MyCartItem key={item._id} index={index} cart={item} />
-            ))}
+            )): <p className='text-center text-2xl my-6'>Your cart is empty</p>}
           </tbody>
         </table>
       </div>
